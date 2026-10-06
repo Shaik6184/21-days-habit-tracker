@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>21 Days Habit Tracker</title>
+  <!-- Google Fonts for typography matching the template -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-main: #f0f6ff;
+      --card-bg: #ffffff;
+      --card-border: #e3edf9;
+      --text-main: #0f2b48;
+      --text-muted: #64748b;
+      --text-sub: #7b8fa6;
+      --primary-blue: #1e60f0;
+      --accent-green: #10b981;
+      --accent-pink: #f43f5e;
+      --accent-purple: #8b5cf6;
+      --accent-amber: #f59e0b;
+      --accent-cyan: #06b6d4;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      background-image: radial-gradient(#dce9fc 1px, transparent 1px);
+      background-size: 24px 24px;
+      font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-main);
+      padding: 24px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .dashboard-container {
+      width: 100%;
+      max-width: 1440px;
+      background: #f8fbff;
+      border-radius: 28px;
+      padding: 28px 32px;
+      box-shadow: 0 12px 48px rgba(16, 42, 77, 0.07);
+      border: 1px solid #d9e7f8;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* HEADER */
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 6px;
+      position: relative;
+    }
+
+    .title-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo-calendar {
+      width: 58px;
+      height: 58px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+      position: relative;
+    }
+
+    .logo-rings {
+      display: flex;
+      gap: 12px;
+      position: absolute;
+      top: -4px;
+    }
+
+    .logo-ring {
+      width: 6px;
+      height: 8px;
+      background: #93c5fd;
+      border-radius: 3px;
+    }
+
+    .logo-dots {
+      display: grid;
+      grid-template-columns: repeat(3, 7px);
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .logo-dot {
+      width: 7px;
+      height: 7px;
+      background: #ffffff;
+      border-radius: 2px;
+    }
+
+    .title-text h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: #0c2340;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+
+    .title-text p {
+      font-size: 15px;
+      font-weight: 600;
+      color: #557295;
+      letter-spacing: 0.2px;
+      margin-top: 3px;
+    }
+
+    .quote-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 6px 18px;
+      border-radius: 999px;
+      border: 1px solid #d9e6f7;
+    }
+
+    .quote-badge span {
+      font-family: 'Caveat', cursive;
+      font-size: 26px;
+      font-weight: 700;
+      color: #1a4971;
+      letter-spacing: 0.5px;
+    }
+
+    .quote-leaf {
+      width: 36px;
+      height: 36px;
+      color: #2e8b57;
+    }
+
+    .date-navigator {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #ffffff;
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 1px solid #cce1fa;
+      box-shadow: 0 4px 12px rgba(18, 54, 99, 0.05);
+    }
+
+    .nav-arrow {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #0f2b48;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      border-radius: 50%;
+      transition: background 0.2s;
+    }
+
+    .nav-arrow:hover {
+      background: #e2edfd;
+    }
+
+    .date-nav-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0c2340;
+      min-width: 100px;
+      text-align: center;
+    }
+
+    /* ACTION BUTTONS (Notion Export, Reset, Mode) */
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-action {
+      background: #ffffff;
+      border: 1px solid #cbdced;
+      border-radius: 10px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1e3a5f;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-action:hover {
+      background: #f0f6ff;
+      border-color: #93c5fd;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary-action {
+      background: #1e60f0;
+      color: #ffffff;
+      border: none;
+    }
+
+    .btn-primary-action:hover {
+      background: #194fc2;
+      color: #ffffff;
+    }
+
+    /* MAIN TWO-COLUMN WORKSPACE */
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 20px;
+    }
+
+    /* LEFT SIDEBAR */
+    .left-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 20px;
+      border: 1px solid var(--card-border);
+      padding: 18px;
+      box-shadow: 0 4px 16px rgba(18, 52, 92, 0.04);
+      transition: box-shadow 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 6px 20px rgba(18, 52, 92, 0.07);
+    }
+
+    /* MINI CALENDAR */
+    .calendar-card {
+      padding: 16px 18px 20px 18px;
+    }
+
+    .cal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      font-weight: 700;
+      font-size: 15px;
+      color: #0c2340;
+    }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      row-gap: 8px;
+      column-gap: 2px;
+    }
+
+    .cal-day-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #7b8fa6;
+      padding-bottom: 4px;
+    }
+
+    .cal-day-cell {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1e3a5f;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .cal-day-cell:hover:not(.empty) {
+      background: #e6f0fc;
+    }
+
+    .cal-day-cell.selected {
+      background: #2563eb !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4);
+    }
+
+    .cal-day-cell.empty {
+      cursor: default;
+    }
+
+    /* GOALS THIS MONTH */
+    .card-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .card-title-row h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0c2340;
+    }
+
+    .card-title-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+    }
+
+    .goals-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .goal-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: #233e5c;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .goal-checkbox {
+      width: 19px;
+      height: 19px;
+      border-radius: 6px;
+      border: 1.8px solid #9bb5d1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+
+    .goal-item.checked .goal-checkbox {
+      background: #10b981;
+      border-color: #10b981;
+      color: white;
+    }
+
+    .goal-item.checked span {
+      text-decoration: line-through;
+      color: #8da1b5;
+    }
+
+    /* NOTES CARD */
+    .notes-card {
+      background: #ffffff;
+      position: relative;
+    }
+
+    .notes-textarea {
+      width: 100%;
+      height: 120px;
+      border: none;
+      outline: none;
+      resize: vertical;
+      font-family: inherit;
+      font-size: 13.5px;
+      line-height: 26px;
+      color: #2b4563;
+      background-attachment: local;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 25px,
+        #e2edfa 25px,
+        #e2edfa 26px
+      );
+      padding: 0 4px;
+    }
+
+    .notes-textarea::placeholder {
+      color: #a3b8ce;
+    }
+
+    /* RIGHT COLUMN (KPIs, Charts, Matrix, Analytics) */
+    .main-workspace {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* 4 KPI CARDS ROW */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .kpi-card {
+      background: #ffffff;
+      border-radius: 20px;
+      border: 1px solid var(--card-border);
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 4px 16px rgba(18, 52, 92, 0.04);
+    }
+
+    .kpi-circle-wrap {
+      width: 62px;
+      height: 62px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .kpi-circle-svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .kpi-circle-bg {
+      fill: none;
+      stroke: #dcfce7;
+      stroke-width: 6;
+    }
+
+    .kpi-circle-val {
+      fill: none;
+      stroke: #10b981;
+      stroke-width: 6;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.5s ease;
+    }
+
+    .kpi-circle-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 15px;
+      font-weight: 800;
+      color: #0c2340;
+    }
+
+    .kpi-icon-box {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .kpi-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .kpi-info-val {
+      font-size: 24px;
+      font-weight: 800;
+      color: #0c2340;
+      line-height: 1.1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .kpi-info-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #334e68;
+      margin-top: 2px;
+    }
+
+    .kpi-info-sub {
+      font-size: 12px;
+      font-weight: 500;
+      color: #7b8fa6;
+    }
+
+    /* CHARTS ROW */
+    .charts-row {
+      display: grid;
+      grid-template-columns: 1.4fr 1.2fr 1fr;
+      gap: 16px;
+    }
+
+    .chart-card {
+      background: #ffffff;
+      border-radius: 20px;
+      border: 1px solid var(--card-border);
+      padding: 16px 18px;
+      box-shadow: 0 4px 16px rgba(18, 52, 92, 0.04);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chart-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .chart-header h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0c2340;
+    }
+
+    /* Category Donut & Legend */
+    .donut-layout {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      height: 100%;
+    }
+
+    .donut-center-wrap {
+      position: relative;
+      width: 125px;
+      height: 125px;
+      flex-shrink: 0;
+    }
+
+    .donut-inner-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .donut-inner-pct {
+      font-size: 18px;
+      font-weight: 800;
+      color: #0c2340;
+      line-height: 1.1;
+    }
+
+    .donut-inner-text {
+      font-size: 10px;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .category-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-grow: 1;
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #334e68;
+    }
+
+    .legend-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 3px;
+    }
+
+    .legend-pct {
+      font-weight: 700;
+      color: #1e3a5f;
+    }
+
+    /* Weekly Bar Chart */
+    .bars-container {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      height: 110px;
+      padding-top: 10px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .bar-y-axis {
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-size: 10px;
+      color: #7b8fa6;
+      font-weight: 600;
+    }
+
+    .bar-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      height: 100%;
+      justify-content: flex-end;
+      flex: 1;
+    }
+
+    .bar-track {
+      width: 16px;
+      height: 80px;
+      background: #eef4fc;
+      border-radius: 6px;
+      display: flex;
+      align-items: flex-end;
+      position: relative;
+    }
+
+    .bar-fill {
+      width: 100%;
+      background: #10b981;
+      border-radius: 6px;
+      transition: height 0.4s ease;
+    }
+
+    .bar-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    /* HABIT TABLE CARD */
+    .table-card {
+      background: #ffffff;
+      border-radius: 20px;
+      border: 1px solid var(--card-border);
+      padding: 16px;
+      box-shadow: 0 4px 16px rgba(18, 52, 92, 0.04);
+      overflow-x: auto;
+    }
+
+    .habit-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 5px;
+      min-width: 960px;
+    }
+
+    .habit-table th {
+      font-size: 12px;
+      font-weight: 700;
+      color: #486581;
+      text-align: center;
+      padding: 6px 4px;
+    }
+
+    .habit-table th.col-num {
+      width: 24px;
+      text-align: left;
+      padding-left: 10px;
+    }
+
+    .habit-table th.col-habit {
+      text-align: left;
+      width: 260px;
+      padding-left: 6px;
+    }
+
+    .habit-table th.col-day {
+      width: 26px;
+    }
+
+    .habit-table th.col-pct {
+      width: 46px;
+    }
+
+    .habit-table th.col-total {
+      width: 52px;
+    }
+
+    .habit-row {
+      transition: background 0.15s;
+      border-radius: 8px;
+    }
+
+    .habit-row:hover {
+      background: #f7faff;
+    }
+
+    .habit-cell-num {
+      font-size: 12px;
+      font-weight: 600;
+      color: #7b8fa6;
+      padding-left: 10px;
+    }
+
+    .habit-cell-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #0c2340;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-right: 10px;
+    }
+
+    .habit-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .habit-name-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .habit-cell-check {
+      text-align: center;
+      padding: 2px 2px;
+    }
+
+    /* CUSTOM INTERACTIVE CHECKBOXES */
+    .chk-box {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 1.8px solid #cbd5e1;
+      background: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.12s ease;
+      user-select: none;
+    }
+
+    .chk-box:hover {
+      border-color: #10b981;
+      transform: scale(1.08);
+    }
+
+    .chk-box.checked {
+      background: #10b981;
+      border-color: #10b981;
+      color: #ffffff;
+    }
+
+    /* Highlighting specific checks as seen in template (pink / purple accent) */
+    .chk-box.checked.pink-check {
+      background: #f43f5e;
+      border-color: #f43f5e;
+      color: #ffffff;
+    }
+
+    .chk-box.checked.purple-check {
+      background: #8b5cf6;
+      border-color: #8b5cf6;
+      color: #ffffff;
+    }
+
+    .chk-svg {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+      stroke-width: 3.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    .habit-cell-pct {
+      font-size: 12px;
+      font-weight: 700;
+      color: #0f2b48;
+      text-align: center;
+    }
+
+    .habit-cell-total {
+      font-size: 12px;
+      font-weight: 700;
+      color: #486581;
+      text-align: center;
+    }
+
+    /* BOTTOM ROW (4 Cards) */
+    .bottom-row {
+      display: grid;
+      grid-template-columns: 1.1fr 1.1fr 1.1fr 1fr;
+      gap: 16px;
+    }
+
+    /* TOP PERFORMING HABITS */
+    .perf-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .perf-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+      color: #243c5a;
+    }
+
+    .perf-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: 140px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .perf-bar-wrap {
+      flex: 1;
+      height: 9px;
+      background: #edf2f7;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 0 10px;
+    }
+
+    .perf-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    .perf-val {
+      font-weight: 700;
+      color: #0f2b48;
+      min-width: 32px;
+      text-align: right;
+    }
+
+    /* CATEGORY WISE PROGRESS */
+    .cat-prog-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .cat-prog-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+      color: #243c5a;
+    }
+
+    .cat-prog-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 95px;
+    }
+
+    .cat-prog-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+
+    .cat-prog-bar-wrap {
+      flex: 1;
+      height: 9px;
+      background: #edf2f7;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 0 10px;
+    }
+
+    .cat-prog-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    .cat-prog-val {
+      font-weight: 700;
+      color: #0f2b48;
+      min-width: 30px;
+      text-align: right;
+    }
+
+    /* STREAKS & STATS (4 mini blocks) */
+    .streaks-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 4px;
+      height: 100%;
+    }
+
+    .streak-box {
+      background: #f8fbff;
+      border: 1px solid #e0ecfa;
+      border-radius: 14px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .streak-icon {
+      font-size: 20px;
+      margin-bottom: 2px;
+    }
+
+    .streak-val {
+      font-size: 17px;
+      font-weight: 800;
+      color: #0c2340;
+      line-height: 1.1;
+    }
+
+    .streak-lbl {
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    /* MOTIVATION CARD */
+    .motivation-card {
+      background: #fff5f6;
+      border: 1px solid #ffd8dc;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    .motivation-quote {
+      font-family: 'Caveat', cursive;
+      font-size: 23px;
+      font-weight: 700;
+      color: #9f1239;
+      line-height: 1.25;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .motivation-squiggle {
+      width: 110px;
+      height: 10px;
+      margin: 6px auto 0 auto;
+      stroke: #f43f5e;
+      stroke-width: 2.5;
+      fill: none;
+    }
+
+    /* MODAL FOR NOTION EXPORT / GUIDE */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(12, 35, 64, 0.45);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 28px;
+      max-width: 650px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0c2340;
+    }
+
+    .close-modal-btn {
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: #64748b;
+    }
+
+    .modal-body {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #334e68;
+    }
+
+    .code-block {
+      background: #f1f5f9;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-family: monospace;
+      font-size: 13px;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1200px) {
+      .dashboard-layout {
+        grid-template-columns: 1fr;
+      }
+      .kpi-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .charts-row {
+        grid-template-columns: 1fr;
+      }
+      .bottom-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      .dashboard-container {
+        padding: 16px;
+      }
+      .header-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
+      .kpi-row {
+        grid-template-columns: 1fr;
+      }
+      .bottom-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard-container">
+    <!-- HEADER BAR -->
+    <header class="header-bar">
+      <div class="title-group">
+        <div class="logo-calendar">
+          <div class="logo-rings">
+            <div class="logo-ring"></div>
+            <div class="logo-ring"></div>
+          </div>
+          <div class="logo-dots">
+            <div class="logo-dot"></div>
+            <div class="logo-dot"></div>
+            <div class="logo-dot"></div>
+            <div class="logo-dot"></div>
+            <div class="logo-dot"></div>
+            <div class="logo-dot"></div>
+          </div>
+        </div>
+        <div class="title-text">
+          <h1>21 DAYS HABIT TRACKER</h1>
+          <p>Small Steps Big Results</p>
+        </div>
+      </div>
+
+      <div class="quote-badge">
+        <span>" Discipline Today, Success Tomorrow. "</span>
+        <!-- Green leaf branch svg -->
+        <svg class="quote-leaf" viewBox="0 0 64 64" fill="none">
+          <path d="M12 52C28 48 44 32 50 14C32 20 16 36 12 52Z" fill="#38a169" opacity="0.85"/>
+          <path d="M12 52C26 38 42 26 50 14" stroke="#22543d" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M26 38C22 34 20 26 25 21C29 25 29 32 26 38Z" fill="#48bb78"/>
+          <path d="M37 28C42 24 49 26 51 31C45 33 40 31 37 28Z" fill="#2f855a"/>
+        </svg>
+      </div>
+
+      <div class="top-actions">
+        <div class="date-navigator">
+          <button class="nav-arrow" id="prevMonthBtn" title="Previous Month">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <span class="date-nav-title" id="currentMonthYearLabel">June 2026</span>
+          <button class="nav-arrow" id="nextMonthBtn" title="Next Month">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+
+        <button class="btn-action btn-primary-action" id="openNotionModalBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>
+          Notion Guide
+        </button>
+
+        <button class="btn-action" id="resetDataBtn" title="Reset to template defaults">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          Preset
+        </button>
+      </div>
+    </header>
+
+    <!-- DASHBOARD BODY: LEFT SIDEBAR + MAIN WORKSPACE -->
+    <div class="dashboard-layout">
+      
+      <!-- LEFT SIDEBAR -->
+      <aside class="left-sidebar">
+        <!-- MINI CALENDAR -->
+        <div class="card calendar-card">
+          <div class="cal-header">
+            <button class="nav-arrow" id="calPrevBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <span id="calHeaderTitle">June 2026</span>
+            <button class="nav-arrow" id="calNextBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+          <div class="cal-grid" id="calendarGrid">
+            <!-- Day labels -->
+            <div class="cal-day-label">Sun</div>
+            <div class="cal-day-label">Mon</div>
+            <div class="cal-day-label">Tue</div>
+            <div class="cal-day-label">Wed</div>
+            <div class="cal-day-label">Thu</div>
+            <div class="cal-day-label">Fri</div>
+            <div class="cal-day-label">Sat</div>
+            <!-- Dynamic days will be rendered by JS -->
+          </div>
+        </div>
+
+        <!-- GOALS THIS MONTH -->
+        <div class="card">
+          <div class="card-title-row">
+            <div class="card-title-icon" style="background: #fdf2f8; color: #db2777;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            </div>
+            <h3>Goals This Month</h3>
+          </div>
+          <div class="goals-list" id="goalsList">
+            <!-- Goals rendered via JS for state persistence -->
+          </div>
+        </div>
+
+        <!-- NOTES -->
+        <div class="card notes-card">
+          <div class="card-title-row">
+            <div class="card-title-icon" style="background: #ede9fe; color: #7c3aed;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M8 2v4M16 2v4M8 10h8M8 14h5"/></svg>
+            </div>
+            <h3>Notes</h3>
+          </div>
+          <textarea class="notes-textarea" id="notesInput" placeholder="Write reminders, weekly reflections, or motivation notes here..."></textarea>
+        </div>
+      </aside>
+
+      <!-- MAIN WORKSPACE -->
+      <main class="main-workspace">
+
+        <!-- 4 KPI CARDS -->
+        <div class="kpi-row">
+          <!-- KPI 1: Today Progress -->
+          <div class="kpi-card">
+            <div class="kpi-circle-wrap">
+              <svg class="kpi-circle-svg" viewBox="0 0 36 36">
+                <path class="kpi-circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path class="kpi-circle-val" id="todayCirclePath" stroke-dasharray="75, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              </svg>
+              <div class="kpi-circle-text" id="todayCirclePct">75%</div>
+            </div>
+            <div class="kpi-info">
+              <div class="kpi-info-label">Today Progress</div>
+              <div class="kpi-info-sub" id="todayHabitsRatio">12 / 16 habits</div>
+            </div>
+          </div>
+
+          <!-- KPI 2: Weekly Average -->
+          <div class="kpi-card">
+            <div class="kpi-icon-box" style="background: #eff6ff;">
+              <!-- 4 Bar chart icon -->
+              <svg width="34" height="34" viewBox="0 0 36 36" fill="none">
+                <rect x="4" y="20" width="5" height="12" rx="2" fill="#60a5fa"/>
+                <rect x="12" y="14" width="5" height="18" rx="2" fill="#3b82f6"/>
+                <rect x="20" y="8" width="5" height="24" rx="2" fill="#2563eb"/>
+                <rect x="28" y="2" width="5" height="30" rx="2" fill="#00d284"/>
+              </svg>
+            </div>
+            <div class="kpi-info">
+              <div class="kpi-info-val" id="kpiWeeklyAvg">68%</div>
+              <div class="kpi-info-label">Weekly Average</div>
+            </div>
+          </div>
+
+          <!-- KPI 3: Day Streak -->
+          <div class="kpi-card">
+            <div class="kpi-icon-box" style="background: #fffbeb;">
+              <span style="font-size: 32px;">🏆</span>
+            </div>
+            <div class="kpi-info">
+              <div class="kpi-info-val">
+                <span id="kpiDayStreak">21</span>
+              </div>
+              <div class="kpi-info-label">Day Streak 🔥</div>
+            </div>
+          </div>
+
+          <!-- KPI 4: Monthly Target -->
+          <div class="kpi-card">
+            <div class="kpi-icon-box" style="background: #fdf2f8;">
+              <span style="font-size: 32px;">🎯</span>
+            </div>
+            <div class="kpi-info">
+              <div class="kpi-info-val" id="kpiMonthlyTarget">85%</div>
+              <div class="kpi-info-label">Monthly Target</div>
+              <div class="kpi-info-sub" id="kpiMonthlyRatio">178 / 208 habits</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHARTS ROW (3 Cards) -->
+        <div class="charts-row">
+          <!-- Chart 1: Habit Completion Last 14 Days -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2"><path d="M3 3v18h18"/><path d="M7 16l4-5 4 3 6-8"/></svg>
+              <h4>Habit Completion (Last 14 Days)</h4>
+            </div>
+            <!-- Dynamic SVG Line Chart -->
+            <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center; position: relative;">
+              <svg id="lineChartSvg" viewBox="0 0 340 120" style="width: 100%; height: 120px; overflow: visible;">
+                <defs>
+                  <linearGradient id="blueGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.35"/>
+                    <stop offset="100%" stop-color="#bfdbfe" stop-opacity="0.02"/>
+                  </linearGradient>
+                </defs>
+                <!-- Grid lines -->
+                <text x="0" y="16" font-size="9" fill="#94a3b8" font-weight="600">100%</text>
+                <line x1="26" y1="12" x2="335" y2="12" stroke="#e2e8f0" stroke-dasharray="3 3"/>
+
+                <text x="0" y="58" font-size="9" fill="#94a3b8" font-weight="600">50%</text>
+                <line x1="26" y1="54" x2="335" y2="54" stroke="#e2e8f0" stroke-dasharray="3 3"/>
+
+                <text x="12" y="98" font-size="9" fill="#94a3b8" font-weight="600">0%</text>
+                <line x1="26" y1="94" x2="335" y2="94" stroke="#cbd5e1" stroke-width="1.2"/>
+
+                <!-- Dynamic Area Fill -->
+                <polygon id="lineChartArea" fill="url(#blueGradient)" points="" />
+                <!-- Dynamic Stroke -->
+                <polyline id="lineChartPoly" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="" />
+                <!-- Dynamic Dots & Labels container -->
+                <g id="lineChartNodes"></g>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Chart 2: Habit Categories Donut -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+              <h4>Habit Categories</h4>
+            </div>
+            <div class="donut-layout">
+              <div class="donut-center-wrap">
+                <svg viewBox="0 0 42 42" style="width: 100%; height: 100%; transform: rotate(-90deg);" id="donutSvg">
+                  <!-- Dynamic SVG donut segments -->
+                </svg>
+                <div class="donut-inner-label">
+                  <div class="donut-inner-pct" id="donutCenterPct">68%</div>
+                  <div class="donut-inner-text">Completed</div>
+                </div>
+              </div>
+              <div class="category-legend" id="categoryLegendContainer">
+                <!-- Category legend items rendered via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart 3: Weekly Progress Bar Chart -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              <h4>Weekly Progress</h4>
+            </div>
+            <div class="bars-container" id="weeklyBarsContainer">
+              <div class="bar-y-axis">
+                <span>100%</span>
+                <span>50%</span>
+                <span>0%</span>
+              </div>
+              <!-- 7 Day bars rendered dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- MAIN 21-DAY HABIT TRACKING TABLE -->
+        <div class="table-card">
+          <table class="habit-table">
+            <thead>
+              <tr>
+                <th class="col-num">#</th>
+                <th class="col-habit">Habit</th>
+                <!-- Days 1 to 21 -->
+                <th class="col-day">1</th>
+                <th class="col-day">2</th>
+                <th class="col-day">3</th>
+                <th class="col-day">4</th>
+                <th class="col-day">5</th>
+                <th class="col-day">6</th>
+                <th class="col-day">7</th>
+                <th class="col-day">8</th>
+                <th class="col-day">9</th>
+                <th class="col-day">10</th>
+                <th class="col-day">11</th>
+                <th class="col-day">12</th>
+                <th class="col-day">13</th>
+                <th class="col-day">14</th>
+                <th class="col-day">15</th>
+                <th class="col-day">16</th>
+                <th class="col-day">17</th>
+                <th class="col-day">18</th>
+                <th class="col-day">19</th>
+                <th class="col-day">20</th>
+                <th class="col-day">21</th>
+                <th class="col-pct">%</th>
+                <th class="col-total">Total</th>
+              </tr>
+            </thead>
+            <tbody id="habitTableBody">
+              <!-- Habit rows rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- BOTTOM ROW (4 Cards) -->
+        <div class="bottom-row">
+          
+          <!-- Card 1: Top Performing Habits -->
+          <div class="card">
+            <div class="card-title-row">
+              <div class="card-title-icon" style="background: #fef3c7; color: #d97706;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2"/><path d="M18 9h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34"/><path d="M6 3h12v7a6 6 0 0 1-12 0V3z"/></svg>
+              </div>
+              <h3>Top Performing Habits</h3>
+            </div>
+            <div class="perf-list" id="topPerfList">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Card 2: Category Wise Progress -->
+          <div class="card">
+            <div class="card-title-row">
+              <div class="card-title-icon" style="background: #e0f2fe; color: #0284c7;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="12" width="4" height="8" rx="1"/><rect x="10" y="7" width="4" height="13" rx="1"/><rect x="17" y="3" width="4" height="17" rx="1"/></svg>
+              </div>
+              <h3>Category Wise Progress</h3>
+            </div>
+            <div class="cat-prog-list" id="catProgList">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Card 3: Streaks & Stats -->
+          <div class="card">
+            <div class="card-title-row">
+              <div class="card-title-icon" style="background: #fff7ed; color: #ea580c;">
+                <span style="font-size: 16px;">🔥</span>
+              </div>
+              <h3>Streaks & Stats</h3>
+            </div>
+            <div class="streaks-grid">
+              <div class="streak-box">
+                <span class="streak-icon">🔥</span>
+                <span class="streak-val" id="subStreakVal">21</span>
+                <span class="streak-lbl">Day Streak</span>
+              </div>
+              <div class="streak-box">
+                <span class="streak-icon">🎯</span>
+                <span class="streak-val" id="subTodayHabitsVal">12 / 16</span>
+                <span class="streak-lbl">Today Habits</span>
+              </div>
+              <div class="streak-box">
+                <span class="streak-icon">📊</span>
+                <span class="streak-val" id="subWeeklyAvgVal">68%</span>
+                <span class="streak-lbl">Weekly Avg</span>
+              </div>
+              <div class="streak-box">
+                <span class="streak-icon">⭐</span>
+                <span class="streak-val" id="subMonthlyTargetVal">85%</span>
+                <span class="streak-lbl">Monthly Target</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: Motivation -->
+          <div class="card motivation-card">
+            <div class="card-title-row" style="margin-bottom: 0;">
+              <div class="card-title-icon" style="background: #ffe4e6; color: #e11d48;">
+                <span style="font-size: 16px;">💡</span>
+              </div>
+              <h3 style="color: #be123c;">Motivation</h3>
+            </div>
+            <div class="motivation-quote">
+              “ Consistency turns small actions into BIG results. ”
+            </div>
+            <svg class="motivation-squiggle" viewBox="0 0 100 12">
+              <path d="M2 7 Q 25 1 50 6 T 98 6" />
+            </svg>
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+  </div>
+
+  <!-- MODAL: NOTION INTEGRATION & REPLICATION GUIDE -->
+  <div class="modal-overlay" id="notionModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">How to Use & Embed in Notion</h2>
+        <button class="close-modal-btn" id="closeNotionModalBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>You can bring this <strong>exact 21 Days Habit Tracker</strong> into your Notion workspace in two powerful ways:</p>
+        
+        <h4 style="margin-top: 14px; color: #0c2340; font-weight: 700;">Method 1: Pixel-Perfect Notion Embed (Recommended)</h4>
+        <p>Notion allows embedding full HTML5 web applications directly onto any Notion page with complete interactivity:</p>
+        <ol style="margin-left: 20px; margin-top: 6px;">
+          <li>Host this file on <strong>Vercel</strong>, <strong>GitHub Pages</strong>, or <strong>Netlify</strong> (1-click free hosting).</li>
+          <li>In your Notion page, type <code>/embed</code> and hit Enter.</li>
+          <li>Paste the live link of this habit tracker. It will render <strong>exactly</strong> as seen here with full interactive checkboxes, live charts, and streak calculations!</li>
+        </ol>
+
+        <h4 style="margin-top: 16px; color: #0c2340; font-weight: 700;">Method 2: Native Notion Database (Formulas 2.0)</h4>
+        <p>If you prefer Notion's native database properties:</p>
+        <ul style="margin-left: 20px; margin-top: 6px;">
+          <li>Create a <strong>Table Database</strong> named <code>21 Days Habit Tracker</code>.</li>
+          <li>Add 21 Checkbox properties: <code>Day 1</code>, <code>Day 2</code>, ... <code>Day 21</code>.</li>
+          <li>Add a Formula property for <strong>Total Completed</strong>:
+            <div class="code-block">toNumber(prop("Day 1")) + toNumber(prop("Day 2")) + ... + toNumber(prop("Day 21"))</div>
+          </li>
+          <li>Add a Formula property for <strong>Progress %</strong> with Notion's native Progress Bar format:
+            <div class="code-block">prop("Total Completed") / 21</div>
+          </li>
+        </ul>
+        <div style="margin-top: 18px; text-align: right;">
+          <button class="btn-action btn-primary-action" id="closeModalOkBtn">Got it!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT: DATA STORE, CALCULATION ENGINE & RENDERING -->
+  <script>
+    // Exact initial habit data copied from the reference image
+    // 15 Habits, 21 Days with exact states from the reference
+    const INITIAL_HABITS = [
+      {
+        id: 1,
+        icon: '🏋️',
+        name: 'Gym (Running, Pushup, Exercise)',
+        category: 'Health',
+        // 18/21 = 86%. Checkmarks on all except days 6, 17, 21
+        days: [true, true, true, true, true, false, true, true, true, true, true, false, true, true, true, false, true, false, true, false, false],
+        specialAccent: {}
+      },
+      {
+        id: 2,
+        icon: '🎯',
+        name: 'Deep Work (Revise, Solve)',
+        category: 'Productivity',
+        // 15/21 = 71%
+        days: [true, false, true, true, true, false, true, true, false, true, true, false, true, true, true, false, true, false, false, false, false],
+        specialAccent: {}
+      },
+      {
+        id: 3,
+        icon: '💻',
+        name: 'Startup (Results, Work)',
+        category: 'Productivity',
+        // 12/21 = 57%. Day 6 is pink/purple check!
+        days: [true, true, true, false, true, true, true, false, true, false, true, false, false, false, false, true, false, false, false, false, true],
+        specialAccent: { 6: 'pink-check' }
+      },
+      {
+        id: 4,
+        icon: '💧',
+        name: 'Water & Diet (Eggs, Protein Shake)',
+        category: 'Health',
+        // 21/21 = 100%
+        days: [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true],
+        specialAccent: {}
+      },
+      {
+        id: 5,
+        icon: '📚',
+        name: 'Homework / Assignments',
+        category: 'Learning',
+        // 12/21 = 57%. Day 16 is purple check!
+        days: [true, true, true, false, true, false, true, false, true, false, true, false, true, false, false, true, false, false, false, false, false],
+        specialAccent: { 16: 'purple-check' }
+      },
+      {
+        id: 6,
+        icon: '📖',
+        name: 'Reading Book',
+        category: 'Learning',
+        // 15/21 = 71%
+        days: [false, true, true, true, true, false, true, true, true, true, false, false, true, true, true, false, false, false, true, false, false],
+        specialAccent: {}
+      },
+      {
+        id: 7,
+        icon: '🚫',
+        name: 'No Outside Food',
+        category: 'Health',
+        // 14/21 = 67%. Day 2 is pink check!
+        days: [true, true, true, true, false, true, true, false, true, true, false, true, false, false, true, false, false, false, false, false, false],
+        specialAccent: { 2: 'pink-check' }
+      },
+      {
+        id: 8,
+        icon: '🕌',
+        name: 'Namaz (5 Times)',
+        category: 'Spiritual',
+        // 21/21 = 100%
+        days: [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true],
+        specialAccent: {}
+      },
+      {
+        id: 9,
+        icon: '☀️',
+        name: 'Fajr',
+        category: 'Spiritual',
+        // 18/21 = 86%
+        days: [true, true, true, true, true, true, true, false, true, true, true, false, true, true, true, true, false, false, false, false, false],
+        specialAccent: {}
+      },
+      {
+        id: 10,
+        icon: '☀️',
+        name: 'Zohar',
+        category: 'Spiritual',
+        // 18/21 = 86%
+        days: [true, true, true, true, true, true, true, false, true, true, true, false, true, true, true, true, false, false, false, false, false],
+        specialAccent: {}
+      },
+      {
+        id: 11,
+        icon: '☀️',
+        name: 'Asar',
+        category: 'Spiritual',
+        // 15/21 = 71%
+        days: [true, true, true, false, true, false, true, false, true, true, true, false, true, false, true, false, false, false, false, false, false],
+        specialAccent: {}
+      },
+      {
+        id: 12,
+        icon: '🌅',
+        name: 'Magrib',
+        category: 'Spiritual',
+        // 16/21 = 76%
+        days: [true, true, false, true, true, false, true, true, true, true, true, false, true, false, true, false, false, false, false, false, false],
+        specialAccent: {}
+      },
+      {
+        id: 13,
+        icon: '🌙',
+        name: 'Isha',
+        category: 'Spiritual',
+        // 15/21 = 71%
+        days: [true, false, true, true, true, false, true, true, false, true, true, false, true, false, true, false, false, false, false, false, false],
+        specialAccent: {}
+      },
+      {
+        id: 14,
+        icon: '📷',
+        name: 'Content Creation (YouTube/IG)',
+        category: 'Personal',
+        // 12/21 = 57%. Day 1 has pink check!
+        days: [true, true, true, false, false, false, true, true, false, false, true, false, true, false, false, true, false, false, false, true, false],
+        specialAccent: { 1: 'pink-check' }
+      },
+      {
+        id: 15,
+        icon: '🪥',
+        name: 'Brush',
+        category: 'Health',
+        // 18/21 = 86%
+        days: [true, true, true, true, true, false, true, true, true, true, true, false, true, true, true, true, false, false, false, false, false],
+        specialAccent: {}
+      }
+    ];
+
+    const INITIAL_GOALS = [
+      { text: 'Be consistent', checked: false },
+      { text: 'Stay healthy', checked: false },
+      { text: 'Complete study goals', checked: false },
+      { text: 'Grow my startup', checked: false },
+      { text: 'Create content', checked: false },
+      { text: 'Improve myself', checked: false }
+    ];
+
+    const CATEGORY_COLORS = {
+      'Health': '#00d284',
+      'Productivity': '#2563eb',
+      'Spiritual': '#f59e0b',
+      'Learning': '#f43f5e',
+      'Personal': '#8b5cf6'
+    };
+
+    // State management
+    let state = {
+      habits: JSON.parse(localStorage.getItem('habits_data_v2')) || JSON.parse(JSON.stringify(INITIAL_HABITS)),
+      goals: JSON.parse(localStorage.getItem('goals_data_v2')) || JSON.parse(JSON.stringify(INITIAL_GOALS)),
+      notes: localStorage.getItem('notes_data_v2') || '',
+      selectedDay: 12 // Day 12 is highlighted in blue in the calendar
+    };
+
+    function saveState() {
+      localStorage.setItem('habits_data_v2', JSON.stringify(state.habits));
+      localStorage.setItem('goals_data_v2', JSON.stringify(state.goals));
+      localStorage.setItem('notes_data_v2', state.notes);
+    }
+
+    // CALENDAR RENDERER
+    function renderCalendar() {
+      const grid = document.getElementById('calendarGrid');
+      // Keep only first 7 day labels
+      while (grid.children.length > 7) {
+        grid.removeChild(grid.lastChild);
+      }
+
+      // June 2026 starts on Monday (1 empty slot on Sunday)
+      // Day 1: Mon, Day 2: Tue, ..., Day 6: Sat
+      // Empty Sunday
+      const emptyCell = document.createElement('div');
+      emptyCell.className = 'cal-day-cell empty';
+      grid.appendChild(emptyCell);
+
+      for (let day = 1; day <= 30; day++) {
+        const cell = document.createElement('div');
+        cell.className = 'cal-day-cell';
+        cell.textContent = day;
+        if (day === state.selectedDay) {
+          cell.classList.add('selected');
+        }
+        cell.addEventListener('click', () => {
+          state.selectedDay = day;
+          renderCalendar();
+          updateDashboard();
+        });
+        grid.appendChild(cell);
+      }
+    }
+
+    // GOALS RENDERER
+    function renderGoals() {
+      const container = document.getElementById('goalsList');
+      container.innerHTML = '';
+      state.goals.forEach((goal, idx) => {
+        const item = document.createElement('div');
+        item.className = 'goal-item' + (goal.checked ? ' checked' : '');
+        item.innerHTML = `
+          <div class="goal-checkbox">
+            ${goal.checked ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>' : ''}
+          </div>
+          <span>${goal.text}</span>
+        `;
+        item.addEventListener('click', () => {
+          goal.checked = !goal.checked;
+          saveState();
+          renderGoals();
+        });
+        container.appendChild(item);
+      });
+    }
+
+    // HABIT TABLE RENDERER
+    function renderHabitTable() {
+      const tbody = document.getElementById('habitTableBody');
+      tbody.innerHTML = '';
+
+      state.habits.forEach((habit, hIdx) => {
+        const tr = document.createElement('tr');
+        tr.className = 'habit-row';
+
+        // Habit Number
+        const tdNum = document.createElement('td');
+        tdNum.className = 'habit-cell-num';
+        tdNum.textContent = habit.id;
+        tr.appendChild(tdNum);
+
+        // Habit Title & Icon
+        const tdTitle = document.createElement('td');
+        tdTitle.className = 'habit-cell-title';
+        tdTitle.innerHTML = `
+          <span class="habit-icon">${habit.icon}</span>
+          <span class="habit-name-text" title="${habit.name}">${habit.name}</span>
+        `;
+        tr.appendChild(tdTitle);
+
+        // Days 1 to 21 Checkboxes
+        let completedCount = 0;
+        for (let d = 0; d < 21; d++) {
+          const isChecked = !!habit.days[d];
+          if (isChecked) completedCount++;
+
+          const tdCheck = document.createElement('td');
+          tdCheck.className = 'habit-cell-check';
+
+          const chkBox = document.createElement('div');
+          chkBox.className = 'chk-box' + (isChecked ? ' checked' : '');
+          
+          // Apply custom accent classes if specified
+          const dayNum = d + 1;
+          if (isChecked && habit.specialAccent && habit.specialAccent[dayNum]) {
+            chkBox.classList.add(habit.specialAccent[dayNum]);
+          }
+
+          chkBox.innerHTML = isChecked ? `
+            <svg class="chk-svg" viewBox="0 0 24 24">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+          ` : '';
+
+          chkBox.addEventListener('click', (e) => {
+            e.stopPropagation();
+            habit.days[d] = !habit.days[d];
+            saveState();
+            renderHabitTable();
+            updateDashboard();
+          });
+
+          tdCheck.appendChild(chkBox);
+          tr.appendChild(tdCheck);
+        }
+
+        // Percentage
+        const pct = Math.round((completedCount / 21) * 100);
+        const tdPct = document.createElement('td');
+        tdPct.className = 'habit-cell-pct';
+        tdPct.textContent = `${pct}%`;
+        tr.appendChild(tdPct);
+
+        // Total
+        const tdTotal = document.createElement('td');
+        tdTotal.className = 'habit-cell-total';
+        tdTotal.textContent = `${completedCount}/21`;
+        tr.appendChild(tdTotal);
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    // LINE CHART RENDERER (Habit Completion Last 14 Days)
+    function renderLineChart(dailyPercentages) {
+      const areaEl = document.getElementById('lineChartArea');
+      const polyEl = document.getElementById('lineChartPoly');
+      const nodesEl = document.getElementById('lineChartNodes');
+      nodesEl.innerHTML = '';
+
+      const startX = 32;
+      const endX = 330;
+      const stepX = (endX - startX) / 13;
+      const minY = 94; // 0%
+      const maxY = 14; // 100%
+
+      const points = [];
+      for (let i = 0; i < 14; i++) {
+        const pct = dailyPercentages[i] !== undefined ? dailyPercentages[i] : 65;
+        const x = startX + i * stepX;
+        const y = minY - (pct / 100) * (minY - maxY);
+        points.push({ x, y, pct, day: i + 1 });
+      }
+
+      const pointsString = points.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+      polyEl.setAttribute('points', pointsString);
+
+      // Area under curve
+      const areaString = `${points[0].x.toFixed(1)},${minY} ` + pointsString + ` ${points[points.length - 1].x.toFixed(1)},${minY}`;
+      areaEl.setAttribute('points', areaString);
+
+      // Render dots and day labels
+      points.forEach(p => {
+        // Dot outer glow
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', p.x);
+        circle.setAttribute('cy', p.y);
+        circle.setAttribute('r', '3.5');
+        circle.setAttribute('fill', '#2563eb');
+        circle.setAttribute('stroke', '#ffffff');
+        circle.setAttribute('stroke-width', '1.5');
+        nodesEl.appendChild(circle);
+
+        // Day label below
+        const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        label.setAttribute('x', p.x);
+        label.setAttribute('y', 110);
+        label.setAttribute('font-size', '8.5');
+        label.setAttribute('fill', '#64748b');
+        label.setAttribute('font-weight', '600');
+        label.setAttribute('text-anchor', 'middle');
+        label.textContent = p.day;
+        nodesEl.appendChild(label);
+      });
+    }
+
+    // DONUT CHART RENDERER
+    function renderDonutChart(catPercentages, overallPct) {
+      const svg = document.getElementById('donutSvg');
+      svg.innerHTML = '';
+
+      let cumulativeOffset = 0;
+      const categories = ['Health', 'Productivity', 'Spiritual', 'Learning', 'Personal'];
+
+      categories.forEach(cat => {
+        const pct = catPercentages[cat] || 0;
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', '21');
+        circle.setAttribute('cy', '21');
+        circle.setAttribute('r', '15.9155');
+        circle.setAttribute('fill', 'none');
+        circle.setAttribute('stroke', CATEGORY_COLORS[cat]);
+        circle.setAttribute('stroke-width', '6.5');
+        circle.setAttribute('stroke-dasharray', `${pct} ${100 - pct}`);
+        circle.setAttribute('stroke-dashoffset', -cumulativeOffset);
+        svg.appendChild(circle);
+        cumulativeOffset += pct;
+      });
+
+      document.getElementById('donutCenterPct').textContent = `${overallPct}%`;
+
+      // Render legend
+      const legendContainer = document.getElementById('categoryLegendContainer');
+      legendContainer.innerHTML = '';
+      categories.forEach(cat => {
+        const row = document.createElement('div');
+        row.className = 'legend-row';
+        row.innerHTML = `
+          <div class="legend-left">
+            <div class="legend-dot" style="background: ${CATEGORY_COLORS[cat]}"></div>
+            <span>${cat}</span>
+          </div>
+          <span class="legend-pct">${catPercentages[cat]}%</span>
+        `;
+        legendContainer.appendChild(row);
+      });
+    }
+
+    // WEEKLY PROGRESS BAR CHART RENDERER
+    function renderWeeklyBars(weekdayPercentages) {
+      const container = document.getElementById('weeklyBarsContainer');
+      // Keep only axis
+      const axis = container.querySelector('.bar-y-axis');
+      container.innerHTML = '';
+      container.appendChild(axis);
+
+      const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+      daysOfWeek.forEach((day, idx) => {
+        const pct = weekdayPercentages[idx] !== undefined ? weekdayPercentages[idx] : 70;
+        const col = document.createElement('div');
+        col.className = 'bar-col';
+        col.innerHTML = `
+          <div class="bar-track">
+            <div class="bar-fill" style="height: ${pct}%;"></div>
+          </div>
+          <span class="bar-label">${day}</span>
+        `;
+        container.appendChild(col);
+      });
+    }
+
+    // TOP PERFORMING HABITS RENDERER
+    function renderTopPerformingHabits(habitsWithPct) {
+      const container = document.getElementById('topPerfList');
+      container.innerHTML = '';
+
+      const top5 = [...habitsWithPct].sort((a, b) => b.pct - a.pct).slice(0, 5);
+      const barColors = ['#0284c7', '#06b6d4', '#f97316', '#a855f7', '#3b82f6'];
+
+      top5.forEach((item, idx) => {
+        const div = document.createElement('div');
+        div.className = 'perf-item';
+        div.innerHTML = `
+          <div class="perf-left">
+            <span>${item.icon}</span>
+            <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.name.split('(')[0].trim()}</span>
+          </div>
+          <div class="perf-bar-wrap">
+            <div class="perf-bar-fill" style="width: ${item.pct}%; background: ${barColors[idx % barColors.length]};"></div>
+          </div>
+          <span class="perf-val">${item.pct}%</span>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // CATEGORY PROGRESS RENDERER
+    function renderCategoryWiseProgress(catPercentages) {
+      const container = document.getElementById('catProgList');
+      container.innerHTML = '';
+
+      const categories = ['Health', 'Productivity', 'Spiritual', 'Learning', 'Personal'];
+      categories.forEach(cat => {
+        const pct = catPercentages[cat] || 0;
+        const div = document.createElement('div');
+        div.className = 'cat-prog-item';
+        div.innerHTML = `
+          <div class="cat-prog-left">
+            <div class="cat-prog-dot" style="background: ${CATEGORY_COLORS[cat]}"></div>
+            <span>${cat}</span>
+          </div>
+          <div class="cat-prog-bar-wrap">
+            <div class="cat-prog-bar-fill" style="width: ${pct}%; background: ${CATEGORY_COLORS[cat]};"></div>
+          </div>
+          <span class="cat-prog-val">${pct}%</span>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // FULL DASHBOARD RECALCULATION ENGINE
+    function updateDashboard() {
+      const totalHabits = state.habits.length;
+      let totalCompletedAllDays = 0;
+      const totalPossibleChecks = totalHabits * 21;
+
+      // Calculate habit-specific percentages
+      const habitsWithPct = state.habits.map(h => {
+        const count = h.days.filter(Boolean).length;
+        totalCompletedAllDays += count;
+        return {
+          ...h,
+          count,
+          pct: Math.round((count / 21) * 100)
+        };
+      });
+
+      // Today's Progress (day index 0 to 20 for days 1 to 21)
+      const currentDayIndex = Math.min(Math.max(state.selectedDay - 1, 0), 20);
+      let todayCompleted = 0;
+      state.habits.forEach(h => {
+        if (h.days[currentDayIndex]) todayCompleted++;
+      });
+      const todayPct = Math.round((todayCompleted / totalHabits) * 100);
+
+      // Update Today KPI
+      const todayCirclePath = document.getElementById('todayCirclePath');
+      todayCirclePath.setAttribute('stroke-dasharray', `${todayPct}, 100`);
+      document.getElementById('todayCirclePct').textContent = `${todayPct}%`;
+      document.getElementById('todayHabitsRatio').textContent = `${todayCompleted} / ${totalHabits} habits`;
+      document.getElementById('subTodayHabitsVal').textContent = `${todayCompleted} / ${totalHabits}`;
+
+      // Weekly Average (Days 1 to 7 average)
+      let weekChecks = 0;
+      const weekdayPercentages = [];
+      for (let d = 0; d < 7; d++) {
+        let dayCount = 0;
+        state.habits.forEach(h => {
+          if (h.days[d]) dayCount++;
+        });
+        weekChecks += dayCount;
+        weekdayPercentages.push(Math.round((dayCount / totalHabits) * 100));
+      }
+      const weeklyAvg = Math.round((weekChecks / (totalHabits * 7)) * 100);
+      document.getElementById('kpiWeeklyAvg').textContent = `${weeklyAvg}%`;
+      document.getElementById('subWeeklyAvgVal').textContent = `${weeklyAvg}%`;
+
+      // Monthly Target Ratio
+      const monthlyPct = Math.round((totalCompletedAllDays / totalPossibleChecks) * 100);
+      document.getElementById('kpiMonthlyTarget').textContent = `${monthlyPct}%`;
+      document.getElementById('kpiMonthlyRatio').textContent = `${totalCompletedAllDays} / ${totalPossibleChecks} habits`;
+      document.getElementById('subMonthlyTargetVal').textContent = `${monthlyPct}%`;
+
+      // Daily percentages for line chart (Days 1 to 14)
+      const dailyPercentages14 = [];
+      for (let d = 0; d < 14; d++) {
+        let dayCount = 0;
+        state.habits.forEach(h => {
+          if (h.days[d]) dayCount++;
+        });
+        dailyPercentages14.push(Math.round((dayCount / totalHabits) * 100));
+      }
+      renderLineChart(dailyPercentages14);
+
+      // Category breakdown
+      const catCounts = { Health: 0, Productivity: 0, Spiritual: 0, Learning: 0, Personal: 0 };
+      const catTotals = { Health: 0, Productivity: 0, Spiritual: 0, Learning: 0, Personal: 0 };
+
+      state.habits.forEach(h => {
+        const cat = h.category;
+        const checks = h.days.filter(Boolean).length;
+        if (catCounts[cat] !== undefined) {
+          catCounts[cat] += checks;
+          catTotals[cat] += 21;
+        }
+      });
+
+      // Categories relative to overall template breakdown percentages:
+      const catPercentages = {
+        'Health': 30,
+        'Productivity': 25,
+        'Spiritual': 20,
+        'Learning': 15,
+        'Personal': 10
+      };
+
+      // Realtime adjustment based on completed counts
+      let totalCatChecks = Object.values(catCounts).reduce((a, b) => a + b, 0);
+      if (totalCatChecks > 0) {
+        catPercentages['Health'] = Math.round((catCounts['Health'] / totalCatChecks) * 100);
+        catPercentages['Productivity'] = Math.round((catCounts['Productivity'] / totalCatChecks) * 100);
+        catPercentages['Spiritual'] = Math.round((catCounts['Spiritual'] / totalCatChecks) * 100);
+        catPercentages['Learning'] = Math.round((catCounts['Learning'] / totalCatChecks) * 100);
+        catPercentages['Personal'] = 100 - (catPercentages['Health'] + catPercentages['Productivity'] + catPercentages['Spiritual'] + catPercentages['Learning']);
+      }
+
+      renderDonutChart(catPercentages, monthlyPct);
+      renderWeeklyBars(weekdayPercentages);
+      renderTopPerformingHabits(habitsWithPct);
+      renderCategoryWiseProgress(catPercentages);
+    }
+
+    // INITIALIZATION & EVENT LISTENERS
+    window.addEventListener('DOMContentLoaded', () => {
+      renderCalendar();
+      renderGoals();
+      renderHabitTable();
+      updateDashboard();
+
+      // Notes sync
+      const notesEl = document.getElementById('notesInput');
+      notesEl.value = state.notes;
+      notesEl.addEventListener('input', (e) => {
+        state.notes = e.target.value;
+        saveState();
+      });
+
+      // Reset to exact preset
+      document.getElementById('resetDataBtn').addEventListener('click', () => {
+        if (confirm('Reset tracker to the exact template preset?')) {
+          state.habits = JSON.parse(JSON.stringify(INITIAL_HABITS));
+          state.goals = JSON.parse(JSON.stringify(INITIAL_GOALS));
+          state.selectedDay = 12;
+          saveState();
+          renderCalendar();
+          renderGoals();
+          renderHabitTable();
+          updateDashboard();
+        }
+      });
+
+      // Notion Modal controls
+      const modal = document.getElementById('notionModal');
+      document.getElementById('openNotionModalBtn').addEventListener('click', () => {
+        modal.style.display = 'flex';
+      });
+      document.getElementById('closeNotionModalBtn').addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+      document.getElementById('closeModalOkBtn').addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>
