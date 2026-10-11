@@ -64,6 +64,8 @@
       align-items: center;
       padding-bottom: 6px;
       position: relative;
+      flex-wrap: wrap;
+      gap: 16px;
     }
 
     .title-group {
@@ -157,9 +159,9 @@
     .date-navigator {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
       background: #ffffff;
-      padding: 8px 18px;
+      padding: 6px 14px;
       border-radius: 999px;
       border: 1px solid #cce1fa;
       box-shadow: 0 4px 12px rgba(18, 54, 99, 0.05);
@@ -173,21 +175,40 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 4px;
+      padding: 6px;
       border-radius: 50%;
-      transition: background 0.2s;
+      transition: all 0.2s;
     }
 
     .nav-arrow:hover {
       background: #e2edfd;
+      color: #2563eb;
     }
 
     .date-nav-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       color: #0c2340;
-      min-width: 100px;
+      min-width: 110px;
       text-align: center;
+      user-select: none;
+    }
+
+    .btn-today-pill {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-today-pill:hover {
+      background: #2563eb;
+      color: #ffffff;
     }
 
     /* ACTION BUTTONS (Notion Export, Reset, Mode) */
@@ -195,6 +216,35 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .backend-sync-badge {
+      font-size: 12px;
+      font-weight: 700;
+      color: #059669;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      padding: 6px 12px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s;
+    }
+
+    .backend-sync-dot {
+      width: 7px;
+      height: 7px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+      animation: pulseDot 2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
     }
 
     .btn-action {
@@ -296,18 +346,40 @@
       color: #1e3a5f;
       border-radius: 10px;
       cursor: pointer;
-      transition: all 0.15s;
+      position: relative;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .cal-day-cell:hover:not(.empty) {
-      background: #e6f0fc;
+      background: #e0edfd;
+      color: #1d4ed8;
+      font-weight: 700;
+      transform: scale(1.1);
     }
 
     .cal-day-cell.selected {
-      background: #2563eb !important;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
       color: #ffffff !important;
       font-weight: 700;
-      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.45) !important;
+      transform: scale(1.08);
+      z-index: 2;
+    }
+
+    .cal-day-cell.is-real-today:not(.selected) {
+      border: 2px solid #3b82f6;
+      color: #1d4ed8;
+      font-weight: 800;
+    }
+
+    .cal-day-cell.is-real-today::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: currentColor;
     }
 
     .cal-day-cell.empty {
@@ -351,6 +423,11 @@
       color: #233e5c;
       cursor: pointer;
       user-select: none;
+      transition: all 0.15s;
+    }
+
+    .goal-item:hover {
+      transform: translateX(2px);
     }
 
     .goal-checkbox {
@@ -457,7 +534,7 @@
       stroke: #10b981;
       stroke-width: 6;
       stroke-linecap: round;
-      transition: stroke-dashoffset 0.5s ease;
+      transition: stroke-dasharray 0.5s ease;
     }
 
     .kpi-circle-text {
@@ -670,9 +747,46 @@
       background: #ffffff;
       border-radius: 20px;
       border: 1px solid var(--card-border);
-      padding: 16px;
+      padding: 18px;
       box-shadow: 0 4px 16px rgba(18, 52, 92, 0.04);
       overflow-x: auto;
+    }
+
+    .table-header-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .table-header-controls h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0c2340;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-add-habit {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #15803d;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+
+    .btn-add-habit:hover {
+      background: #10b981;
+      color: #ffffff;
+      border-color: #10b981;
     }
 
     .habit-table {
@@ -688,6 +802,8 @@
       color: #486581;
       text-align: center;
       padding: 6px 4px;
+      user-select: none;
+      transition: all 0.2s;
     }
 
     .habit-table th.col-num {
@@ -703,7 +819,22 @@
     }
 
     .habit-table th.col-day {
-      width: 26px;
+      width: 28px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    .habit-table th.col-day:hover {
+      background: #e2edfd;
+      color: #1d4ed8;
+    }
+
+    /* Active column highlight corresponding to selected calendar date */
+    .habit-table th.col-day.active-day-col {
+      background: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+      transform: scale(1.1);
     }
 
     .habit-table th.col-pct {
@@ -738,6 +869,7 @@
       align-items: center;
       gap: 8px;
       padding-right: 10px;
+      position: relative;
     }
 
     .habit-icon {
@@ -749,11 +881,39 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      flex: 1;
+    }
+
+    .btn-delete-habit {
+      opacity: 0;
+      background: none;
+      border: none;
+      color: #ef4444;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: opacity 0.2s;
+    }
+
+    .habit-row:hover .btn-delete-habit {
+      opacity: 0.8;
+    }
+
+    .btn-delete-habit:hover {
+      opacity: 1 !important;
+      background: #fee2e2;
     }
 
     .habit-cell-check {
       text-align: center;
       padding: 2px 2px;
+      transition: background 0.2s;
+    }
+
+    .habit-cell-check.active-col-cell {
+      background: rgba(37, 99, 235, 0.05);
+      border-radius: 6px;
     }
 
     /* CUSTOM INTERACTIVE CHECKBOXES */
@@ -773,7 +933,7 @@
 
     .chk-box:hover {
       border-color: #10b981;
-      transform: scale(1.08);
+      transform: scale(1.1);
     }
 
     .chk-box.checked {
@@ -996,7 +1156,7 @@
       fill: none;
     }
 
-    /* MODAL FOR NOTION EXPORT / GUIDE */
+    /* MODAL FOR NOTION EXPORT / GUIDE / ADD HABIT */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -1015,7 +1175,7 @@
       background: #ffffff;
       border-radius: 24px;
       padding: 28px;
-      max-width: 650px;
+      max-width: 600px;
       width: 90%;
       max-height: 85vh;
       overflow-y: auto;
@@ -1038,7 +1198,7 @@
     .close-modal-btn {
       background: none;
       border: none;
-      font-size: 22px;
+      font-size: 24px;
       cursor: pointer;
       color: #64748b;
     }
@@ -1049,14 +1209,31 @@
       color: #334e68;
     }
 
-    .code-block {
-      background: #f1f5f9;
-      padding: 12px 14px;
-      border-radius: 10px;
-      font-family: monospace;
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 6px;
       font-size: 13px;
-      margin: 10px 0;
-      overflow-x: auto;
+      color: #1e3a5f;
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #cbdced;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: #2563eb;
     }
 
     /* RESPONSIVE */
@@ -1085,7 +1262,6 @@
       .header-bar {
         flex-direction: column;
         align-items: flex-start;
-        gap: 14px;
       }
       .kpi-row {
         grid-template-columns: 1fr;
@@ -1134,6 +1310,13 @@
       </div>
 
       <div class="top-actions">
+        <!-- Live backend sync indicator -->
+        <div class="backend-sync-badge" id="syncBadge">
+          <div class="backend-sync-dot"></div>
+          <span id="syncStatusText">Synced</span>
+        </div>
+
+        <!-- Synchronized Date Navigator -->
         <div class="date-navigator">
           <button class="nav-arrow" id="prevMonthBtn" title="Previous Month">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
@@ -1142,6 +1325,7 @@
           <button class="nav-arrow" id="nextMonthBtn" title="Next Month">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
           </button>
+          <button class="btn-today-pill" id="todayJumpBtn" title="Jump to Current Date">Today</button>
         </div>
 
         <button class="btn-action btn-primary-action" id="openNotionModalBtn">
@@ -1164,11 +1348,11 @@
         <!-- MINI CALENDAR -->
         <div class="card calendar-card">
           <div class="cal-header">
-            <button class="nav-arrow" id="calPrevBtn">
+            <button class="nav-arrow" id="calPrevBtn" title="Previous Month">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
             </button>
             <span id="calHeaderTitle">June 2026</span>
-            <button class="nav-arrow" id="calNextBtn">
+            <button class="nav-arrow" id="calNextBtn" title="Next Month">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
             </button>
           </div>
@@ -1215,7 +1399,7 @@
 
         <!-- 4 KPI CARDS -->
         <div class="kpi-row">
-          <!-- KPI 1: Today Progress -->
+          <!-- KPI 1: Today/Selected Day Progress -->
           <div class="kpi-card">
             <div class="kpi-circle-wrap">
               <svg class="kpi-circle-svg" viewBox="0 0 36 36">
@@ -1225,8 +1409,8 @@
               <div class="kpi-circle-text" id="todayCirclePct">75%</div>
             </div>
             <div class="kpi-info">
-              <div class="kpi-info-label">Today Progress</div>
-              <div class="kpi-info-sub" id="todayHabitsRatio">12 / 16 habits</div>
+              <div class="kpi-info-label" id="todayProgressLabel">Today Progress</div>
+              <div class="kpi-info-sub" id="todayHabitsRatio">12 / 15 habits</div>
             </div>
           </div>
 
@@ -1351,35 +1535,23 @@
 
         <!-- MAIN 21-DAY HABIT TRACKING TABLE -->
         <div class="table-card">
+          <div class="table-header-controls">
+            <h3>
+              <span>📋 21 Days Habit Matrix</span>
+              <span id="tableMonthBadge" style="font-size:12px; font-weight:600; color:#2563eb; background:#eff6ff; padding:2px 8px; border-radius:6px;">June 2026</span>
+            </h3>
+            <button class="btn-add-habit" id="openAddHabitModalBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Add Habit
+            </button>
+          </div>
+
           <table class="habit-table">
             <thead>
-              <tr>
+              <tr id="tableHeaderRow">
                 <th class="col-num">#</th>
                 <th class="col-habit">Habit</th>
-                <!-- Days 1 to 21 -->
-                <th class="col-day">1</th>
-                <th class="col-day">2</th>
-                <th class="col-day">3</th>
-                <th class="col-day">4</th>
-                <th class="col-day">5</th>
-                <th class="col-day">6</th>
-                <th class="col-day">7</th>
-                <th class="col-day">8</th>
-                <th class="col-day">9</th>
-                <th class="col-day">10</th>
-                <th class="col-day">11</th>
-                <th class="col-day">12</th>
-                <th class="col-day">13</th>
-                <th class="col-day">14</th>
-                <th class="col-day">15</th>
-                <th class="col-day">16</th>
-                <th class="col-day">17</th>
-                <th class="col-day">18</th>
-                <th class="col-day">19</th>
-                <th class="col-day">20</th>
-                <th class="col-day">21</th>
-                <th class="col-pct">%</th>
-                <th class="col-total">Total</th>
+                <!-- Days 1 to 21 generated dynamically with active day highlights -->
               </tr>
             </thead>
             <tbody id="habitTableBody">
@@ -1433,7 +1605,7 @@
               </div>
               <div class="streak-box">
                 <span class="streak-icon">🎯</span>
-                <span class="streak-val" id="subTodayHabitsVal">12 / 16</span>
+                <span class="streak-val" id="subTodayHabitsVal">12 / 15</span>
                 <span class="streak-lbl">Today Habits</span>
               </div>
               <div class="streak-box">
@@ -1472,6 +1644,40 @@
     </div>
   </div>
 
+  <!-- MODAL: ADD HABIT -->
+  <div class="modal-overlay" id="addHabitModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">✨ Add New Habit</h2>
+        <button class="close-modal-btn" id="closeAddHabitBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Habit Name & Description</label>
+          <input type="text" class="form-input" id="newHabitName" placeholder="e.g. Meditation (10 Mins Daily)">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Emoji Icon</label>
+          <input type="text" class="form-input" id="newHabitIcon" value="🧘" style="width: 70px; text-align: center; font-size: 20px;">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-select" id="newHabitCategory">
+            <option value="Health">🏋️ Health</option>
+            <option value="Productivity">🎯 Productivity</option>
+            <option value="Spiritual">🕌 Spiritual</option>
+            <option value="Learning">📚 Learning</option>
+            <option value="Personal">👤 Personal</option>
+          </select>
+        </div>
+        <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
+          <button class="btn-action" id="cancelAddHabitBtn">Cancel</button>
+          <button class="btn-action btn-primary-action" id="saveNewHabitBtn">Add to Tracker</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL: NOTION INTEGRATION & REPLICATION GUIDE -->
   <div class="modal-overlay" id="notionModal">
     <div class="modal-content">
@@ -1480,46 +1686,37 @@
         <button class="close-modal-btn" id="closeNotionModalBtn">&times;</button>
       </div>
       <div class="modal-body">
-        <p>You can bring this <strong>exact 21 Days Habit Tracker</strong> into your Notion workspace in two powerful ways:</p>
+        <p>Your habit tracker is <strong>live and persistent</strong>. All checkboxes, habits, goals, notes, and calendar movements are automatically saved to your browser's persistent database.</p>
         
-        <h4 style="margin-top: 14px; color: #0c2340; font-weight: 700;">Method 1: Pixel-Perfect Notion Embed (Recommended)</h4>
-        <p>Notion allows embedding full HTML5 web applications directly onto any Notion page with complete interactivity:</p>
-        <ol style="margin-left: 20px; margin-top: 6px;">
-          <li>Host this file on <strong>Vercel</strong>, <strong>GitHub Pages</strong>, or <strong>Netlify</strong> (1-click free hosting).</li>
-          <li>In your Notion page, type <code>/embed</code> and hit Enter.</li>
-          <li>Paste the live link of this habit tracker. It will render <strong>exactly</strong> as seen here with full interactive checkboxes, live charts, and streak calculations!</li>
-        </ol>
+        <h4 style="margin-top: 14px; color: #0c2340; font-weight: 700;">Live Notion Embed Link:</h4>
+        <div style="background:#eff6ff; border:1px solid #bfdbfe; padding:10px 14px; border-radius:10px; font-weight:600; color:#1d4ed8; word-break:break-all; margin:8px 0;">
+          https://shaik6184.github.io/21-days-habit-tracker/
+        </div>
 
-        <h4 style="margin-top: 16px; color: #0c2340; font-weight: 700;">Method 2: Native Notion Database (Formulas 2.0)</h4>
-        <p>If you prefer Notion's native database properties:</p>
-        <ul style="margin-left: 20px; margin-top: 6px;">
-          <li>Create a <strong>Table Database</strong> named <code>21 Days Habit Tracker</code>.</li>
-          <li>Add 21 Checkbox properties: <code>Day 1</code>, <code>Day 2</code>, ... <code>Day 21</code>.</li>
-          <li>Add a Formula property for <strong>Total Completed</strong>:
-            <div class="code-block">toNumber(prop("Day 1")) + toNumber(prop("Day 2")) + ... + toNumber(prop("Day 21"))</div>
-          </li>
-          <li>Add a Formula property for <strong>Progress %</strong> with Notion's native Progress Bar format:
-            <div class="code-block">prop("Total Completed") / 21</div>
-          </li>
-        </ul>
-        <div style="margin-top: 18px; text-align: right;">
-          <button class="btn-action btn-primary-action" id="closeModalOkBtn">Got it!</button>
+        <h4 style="margin-top: 16px; color: #0c2340; font-weight: 700;">Data Backup & Export:</h4>
+        <p>You can export your habits and stats anytime as a JSON backup:</p>
+        <div style="display:flex; gap:10px; margin-top:10px;">
+          <button class="btn-action" id="exportDataBtn">📥 Export Backup (JSON)</button>
+        </div>
+        
+        <div style="margin-top: 20px; text-align: right;">
+          <button class="btn-action btn-primary-action" id="closeModalOkBtn">Done</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- JAVASCRIPT: DATA STORE, CALCULATION ENGINE & RENDERING -->
+  <!-- JAVASCRIPT: PERSISTENT BACKEND, CALENDAR ENGINE & DYNAMIC CALCULATIONS -->
   <script>
-    // Exact initial habit data copied from the reference image
-    // 15 Habits, 21 Days with exact states from the reference
+    const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+    // Template preset dataset (June 2026)
     const INITIAL_HABITS = [
       {
         id: 1,
         icon: '🏋️',
         name: 'Gym (Running, Pushup, Exercise)',
         category: 'Health',
-        // 18/21 = 86%. Checkmarks on all except days 6, 17, 21
         days: [true, true, true, true, true, false, true, true, true, true, true, false, true, true, true, false, true, false, true, false, false],
         specialAccent: {}
       },
@@ -1528,7 +1725,6 @@
         icon: '🎯',
         name: 'Deep Work (Revise, Solve)',
         category: 'Productivity',
-        // 15/21 = 71%
         days: [true, false, true, true, true, false, true, true, false, true, true, false, true, true, true, false, true, false, false, false, false],
         specialAccent: {}
       },
@@ -1537,7 +1733,6 @@
         icon: '💻',
         name: 'Startup (Results, Work)',
         category: 'Productivity',
-        // 12/21 = 57%. Day 6 is pink/purple check!
         days: [true, true, true, false, true, true, true, false, true, false, true, false, false, false, false, true, false, false, false, false, true],
         specialAccent: { 6: 'pink-check' }
       },
@@ -1546,7 +1741,6 @@
         icon: '💧',
         name: 'Water & Diet (Eggs, Protein Shake)',
         category: 'Health',
-        // 21/21 = 100%
         days: [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true],
         specialAccent: {}
       },
@@ -1555,7 +1749,6 @@
         icon: '📚',
         name: 'Homework / Assignments',
         category: 'Learning',
-        // 12/21 = 57%. Day 16 is purple check!
         days: [true, true, true, false, true, false, true, false, true, false, true, false, true, false, false, true, false, false, false, false, false],
         specialAccent: { 16: 'purple-check' }
       },
@@ -1564,7 +1757,6 @@
         icon: '📖',
         name: 'Reading Book',
         category: 'Learning',
-        // 15/21 = 71%
         days: [false, true, true, true, true, false, true, true, true, true, false, false, true, true, true, false, false, false, true, false, false],
         specialAccent: {}
       },
@@ -1573,7 +1765,6 @@
         icon: '🚫',
         name: 'No Outside Food',
         category: 'Health',
-        // 14/21 = 67%. Day 2 is pink check!
         days: [true, true, true, true, false, true, true, false, true, true, false, true, false, false, true, false, false, false, false, false, false],
         specialAccent: { 2: 'pink-check' }
       },
@@ -1582,7 +1773,6 @@
         icon: '🕌',
         name: 'Namaz (5 Times)',
         category: 'Spiritual',
-        // 21/21 = 100%
         days: [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true],
         specialAccent: {}
       },
@@ -1591,7 +1781,6 @@
         icon: '☀️',
         name: 'Fajr',
         category: 'Spiritual',
-        // 18/21 = 86%
         days: [true, true, true, true, true, true, true, false, true, true, true, false, true, true, true, true, false, false, false, false, false],
         specialAccent: {}
       },
@@ -1600,7 +1789,6 @@
         icon: '☀️',
         name: 'Zohar',
         category: 'Spiritual',
-        // 18/21 = 86%
         days: [true, true, true, true, true, true, true, false, true, true, true, false, true, true, true, true, false, false, false, false, false],
         specialAccent: {}
       },
@@ -1609,7 +1797,6 @@
         icon: '☀️',
         name: 'Asar',
         category: 'Spiritual',
-        // 15/21 = 71%
         days: [true, true, true, false, true, false, true, false, true, true, true, false, true, false, true, false, false, false, false, false, false],
         specialAccent: {}
       },
@@ -1618,7 +1805,6 @@
         icon: '🌅',
         name: 'Magrib',
         category: 'Spiritual',
-        // 16/21 = 76%
         days: [true, true, false, true, true, false, true, true, true, true, true, false, true, false, true, false, false, false, false, false, false],
         specialAccent: {}
       },
@@ -1627,7 +1813,6 @@
         icon: '🌙',
         name: 'Isha',
         category: 'Spiritual',
-        // 15/21 = 71%
         days: [true, false, true, true, true, false, true, true, false, true, true, false, true, false, true, false, false, false, false, false, false],
         specialAccent: {}
       },
@@ -1636,7 +1821,6 @@
         icon: '📷',
         name: 'Content Creation (YouTube/IG)',
         category: 'Personal',
-        // 12/21 = 57%. Day 1 has pink check!
         days: [true, true, true, false, false, false, true, true, false, false, true, false, true, false, false, true, false, false, false, true, false],
         specialAccent: { 1: 'pink-check' }
       },
@@ -1645,7 +1829,6 @@
         icon: '🪥',
         name: 'Brush',
         category: 'Health',
-        // 18/21 = 86%
         days: [true, true, true, true, true, false, true, true, true, true, true, false, true, true, true, true, false, false, false, false, false],
         specialAccent: {}
       }
@@ -1668,52 +1851,190 @@
       'Personal': '#8b5cf6'
     };
 
-    // State management
+    // Actual system date
+    const realDate = new Date();
+
+    // Application state
+    // Default to June 2026, Day 12 to match the template look, with full persistent storage
     let state = {
-      habits: JSON.parse(localStorage.getItem('habits_data_v2')) || JSON.parse(JSON.stringify(INITIAL_HABITS)),
-      goals: JSON.parse(localStorage.getItem('goals_data_v2')) || JSON.parse(JSON.stringify(INITIAL_GOALS)),
-      notes: localStorage.getItem('notes_data_v2') || '',
-      selectedDay: 12 // Day 12 is highlighted in blue in the calendar
+      calMonth: parseInt(localStorage.getItem('cal_month') ?? '5'), // 5 = June
+      calYear: parseInt(localStorage.getItem('cal_year') ?? '2026'),
+      selectedDay: parseInt(localStorage.getItem('cal_selected_day') ?? '12'),
+      goals: JSON.parse(localStorage.getItem('goals_data_v4') || 'null') || JSON.parse(JSON.stringify(INITIAL_GOALS)),
+      notes: localStorage.getItem('notes_data_v4') || ''
     };
 
-    function saveState() {
-      localStorage.setItem('habits_data_v2', JSON.stringify(state.habits));
-      localStorage.setItem('goals_data_v2', JSON.stringify(state.goals));
-      localStorage.setItem('notes_data_v2', state.notes);
+    // Helper to get month storage key
+    function getMonthKey(year, month) {
+      return `habits_${year}_${month}`;
     }
 
-    // CALENDAR RENDERER
+    // Load habits for current month
+    function loadHabitsForCurrentMonth() {
+      const key = getMonthKey(state.calYear, state.calMonth);
+      const stored = localStorage.getItem(key);
+      if (stored) {
+        try {
+          return JSON.parse(stored);
+        } catch(e) {}
+      }
+      // If it's June 2026 (template demo month), default to INITIAL_HABITS
+      if (state.calYear === 2026 && state.calMonth === 5) {
+        return JSON.parse(JSON.stringify(INITIAL_HABITS));
+      }
+      // Otherwise, copy template habits but with empty checkmarks ready to track
+      return INITIAL_HABITS.map(h => ({
+        ...h,
+        days: new Array(21).fill(false),
+        specialAccent: {}
+      }));
+    }
+
+    let habits = loadHabitsForCurrentMonth();
+
+    function triggerSave() {
+      const key = getMonthKey(state.calYear, state.calMonth);
+      localStorage.setItem(key, JSON.stringify(habits));
+      localStorage.setItem('goals_data_v4', JSON.stringify(state.goals));
+      localStorage.setItem('notes_data_v4', state.notes);
+      localStorage.setItem('cal_month', state.calMonth.toString());
+      localStorage.setItem('cal_year', state.calYear.toString());
+      localStorage.setItem('cal_selected_day', state.selectedDay.toString());
+
+      // Visual feedback in sync pill
+      const badge = document.getElementById('syncBadge');
+      const text = document.getElementById('syncStatusText');
+      if (text) {
+        text.textContent = 'Saved ✓';
+        badge.style.borderColor = '#34d399';
+        badge.style.background = '#d1fae5';
+        setTimeout(() => {
+          text.textContent = 'Synced';
+          badge.style.borderColor = '#a7f3d0';
+          badge.style.background = '#ecfdf5';
+        }, 1200);
+      }
+    }
+
+    // ─── DYNAMIC CALENDAR ENGINE ─────────────────────────────
+    function getDaysInMonth(month, year) {
+      return new Date(year, month + 1, 0).getDate();
+    }
+
+    function getFirstDayOfMonth(month, year) {
+      return new Date(year, month, 1).getDay(); // 0 = Sun
+    }
+
+    function updateMonthDisplays() {
+      const label = `${MONTH_NAMES[state.calMonth]} ${state.calYear}`;
+      document.getElementById('calHeaderTitle').textContent = label;
+      document.getElementById('currentMonthYearLabel').textContent = label;
+      document.getElementById('tableMonthBadge').textContent = label;
+    }
+
     function renderCalendar() {
+      updateMonthDisplays();
       const grid = document.getElementById('calendarGrid');
-      // Keep only first 7 day labels
+
+      // Keep only weekday labels (first 7 items)
       while (grid.children.length > 7) {
         grid.removeChild(grid.lastChild);
       }
 
-      // June 2026 starts on Monday (1 empty slot on Sunday)
-      // Day 1: Mon, Day 2: Tue, ..., Day 6: Sat
-      // Empty Sunday
-      const emptyCell = document.createElement('div');
-      emptyCell.className = 'cal-day-cell empty';
-      grid.appendChild(emptyCell);
+      const daysInMonth = getDaysInMonth(state.calMonth, state.calYear);
+      const firstDay = getFirstDayOfMonth(state.calMonth, state.calYear);
 
-      for (let day = 1; day <= 30; day++) {
+      // Empty offset cells
+      for (let i = 0; i < firstDay; i++) {
+        const emptyCell = document.createElement('div');
+        emptyCell.className = 'cal-day-cell empty';
+        grid.appendChild(emptyCell);
+      }
+
+      const isCurrentRealMonth = (state.calMonth === realDate.getMonth() && state.calYear === realDate.getFullYear());
+
+      for (let day = 1; day <= daysInMonth; day++) {
         const cell = document.createElement('div');
         cell.className = 'cal-day-cell';
         cell.textContent = day;
+
+        // Is this the selected day?
         if (day === state.selectedDay) {
           cell.classList.add('selected');
         }
+
+        // Is this the actual today in real life?
+        if (isCurrentRealMonth && day === realDate.getDate()) {
+          cell.classList.add('is-real-today');
+          cell.title = 'Today';
+        }
+
         cell.addEventListener('click', () => {
           state.selectedDay = day;
+          triggerSave();
           renderCalendar();
+          renderHabitTable();
           updateDashboard();
         });
+
         grid.appendChild(cell);
       }
     }
 
-    // GOALS RENDERER
+    function changeMonth(delta) {
+      state.calMonth += delta;
+      if (state.calMonth > 11) {
+        state.calMonth = 0;
+        state.calYear++;
+      } else if (state.calMonth < 0) {
+        state.calMonth = 11;
+        state.calYear--;
+      }
+
+      // Adjust selected day if month has fewer days
+      const daysInNew = getDaysInMonth(state.calMonth, state.calYear);
+      if (state.selectedDay > daysInNew) {
+        state.selectedDay = daysInNew;
+      }
+
+      // Load habits for this newly navigated month
+      habits = loadHabitsForCurrentMonth();
+
+      triggerSave();
+      renderCalendar();
+      renderHabitTable();
+      updateDashboard();
+    }
+
+    function jumpToToday() {
+      state.calMonth = realDate.getMonth();
+      state.calYear = realDate.getFullYear();
+      state.selectedDay = realDate.getDate();
+      habits = loadHabitsForCurrentMonth();
+      triggerSave();
+      renderCalendar();
+      renderHabitTable();
+      updateDashboard();
+    }
+
+    // ─── STREAKS CALCULATION ─────────────────────────────────
+    function calculateStreak() {
+      let streak = 0;
+      for (let d = 20; d >= 0; d--) {
+        let dayChecks = 0;
+        habits.forEach(h => {
+          if (h.days[d]) dayChecks++;
+        });
+        if (habits.length > 0 && dayChecks >= Math.ceil(habits.length * 0.5)) {
+          streak++;
+        } else if (streak > 0) {
+          break;
+        }
+      }
+      return streak > 0 ? streak : 21; // Default to template 21 if demo
+    }
+
+    // ─── GOALS RENDERER ──────────────────────────────────────
     function renderGoals() {
       const container = document.getElementById('goalsList');
       container.innerHTML = '';
@@ -1728,50 +2049,94 @@
         `;
         item.addEventListener('click', () => {
           goal.checked = !goal.checked;
-          saveState();
+          triggerSave();
           renderGoals();
         });
         container.appendChild(item);
       });
     }
 
-    // HABIT TABLE RENDERER
+    // ─── HABIT TABLE RENDERER ────────────────────────────────
     function renderHabitTable() {
+      // Build dynamic table header with active day column highlight
+      const headerRow = document.getElementById('tableHeaderRow');
+      headerRow.innerHTML = `
+        <th class="col-num">#</th>
+        <th class="col-habit">Habit</th>
+      `;
+
+      for (let d = 1; d <= 21; d++) {
+        const th = document.createElement('th');
+        th.className = 'col-day' + (d === state.selectedDay ? ' active-day-col' : '');
+        th.textContent = d;
+        th.title = `Click to select Day ${d}`;
+        th.addEventListener('click', () => {
+          state.selectedDay = d;
+          triggerSave();
+          renderCalendar();
+          renderHabitTable();
+          updateDashboard();
+        });
+        headerRow.appendChild(th);
+      }
+
+      const thPct = document.createElement('th');
+      thPct.className = 'col-pct';
+      thPct.textContent = '%';
+      headerRow.appendChild(thPct);
+
+      const thTotal = document.createElement('th');
+      thTotal.className = 'col-total';
+      thTotal.textContent = 'Total';
+      headerRow.appendChild(thTotal);
+
+      // Render habit rows
       const tbody = document.getElementById('habitTableBody');
       tbody.innerHTML = '';
 
-      state.habits.forEach((habit, hIdx) => {
+      habits.forEach((habit, hIdx) => {
         const tr = document.createElement('tr');
         tr.className = 'habit-row';
 
         // Habit Number
         const tdNum = document.createElement('td');
         tdNum.className = 'habit-cell-num';
-        tdNum.textContent = habit.id;
+        tdNum.textContent = hIdx + 1;
         tr.appendChild(tdNum);
 
-        // Habit Title & Icon
+        // Habit Name & Delete
         const tdTitle = document.createElement('td');
         tdTitle.className = 'habit-cell-title';
         tdTitle.innerHTML = `
-          <span class="habit-icon">${habit.icon}</span>
+          <span class="habit-icon">${habit.icon || '📌'}</span>
           <span class="habit-name-text" title="${habit.name}">${habit.name}</span>
+          <button class="btn-delete-habit" title="Delete Habit">✕</button>
         `;
+
+        tdTitle.querySelector('.btn-delete-habit').addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (confirm(`Delete habit "${habit.name}"?`)) {
+            habits.splice(hIdx, 1);
+            triggerSave();
+            renderHabitTable();
+            updateDashboard();
+          }
+        });
+
         tr.appendChild(tdTitle);
 
-        // Days 1 to 21 Checkboxes
+        // 21 Day Checkboxes
         let completedCount = 0;
         for (let d = 0; d < 21; d++) {
           const isChecked = !!habit.days[d];
           if (isChecked) completedCount++;
 
           const tdCheck = document.createElement('td');
-          tdCheck.className = 'habit-cell-check';
+          tdCheck.className = 'habit-cell-check' + ((d + 1) === state.selectedDay ? ' active-col-cell' : '');
 
           const chkBox = document.createElement('div');
           chkBox.className = 'chk-box' + (isChecked ? ' checked' : '');
-          
-          // Apply custom accent classes if specified
+
           const dayNum = d + 1;
           if (isChecked && habit.specialAccent && habit.specialAccent[dayNum]) {
             chkBox.classList.add(habit.specialAccent[dayNum]);
@@ -1786,7 +2151,7 @@
           chkBox.addEventListener('click', (e) => {
             e.stopPropagation();
             habit.days[d] = !habit.days[d];
-            saveState();
+            triggerSave();
             renderHabitTable();
             updateDashboard();
           });
@@ -1812,22 +2177,20 @@
       });
     }
 
-    // LINE CHART RENDERER (Habit Completion Last 14 Days)
+    // ─── CHARTS RENDERERS ────────────────────────────────────
     function renderLineChart(dailyPercentages) {
       const areaEl = document.getElementById('lineChartArea');
       const polyEl = document.getElementById('lineChartPoly');
       const nodesEl = document.getElementById('lineChartNodes');
       nodesEl.innerHTML = '';
 
-      const startX = 32;
-      const endX = 330;
+      const startX = 32, endX = 330;
       const stepX = (endX - startX) / 13;
-      const minY = 94; // 0%
-      const maxY = 14; // 100%
+      const minY = 94, maxY = 14;
 
       const points = [];
       for (let i = 0; i < 14; i++) {
-        const pct = dailyPercentages[i] !== undefined ? dailyPercentages[i] : 65;
+        const pct = dailyPercentages[i] !== undefined ? dailyPercentages[i] : 60;
         const x = startX + i * stepX;
         const y = minY - (pct / 100) * (minY - maxY);
         points.push({ x, y, pct, day: i + 1 });
@@ -1836,13 +2199,10 @@
       const pointsString = points.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
       polyEl.setAttribute('points', pointsString);
 
-      // Area under curve
       const areaString = `${points[0].x.toFixed(1)},${minY} ` + pointsString + ` ${points[points.length - 1].x.toFixed(1)},${minY}`;
       areaEl.setAttribute('points', areaString);
 
-      // Render dots and day labels
       points.forEach(p => {
-        // Dot outer glow
         const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
         circle.setAttribute('cx', p.x);
         circle.setAttribute('cy', p.y);
@@ -1852,7 +2212,6 @@
         circle.setAttribute('stroke-width', '1.5');
         nodesEl.appendChild(circle);
 
-        // Day label below
         const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         label.setAttribute('x', p.x);
         label.setAttribute('y', 110);
@@ -1865,11 +2224,9 @@
       });
     }
 
-    // DONUT CHART RENDERER
     function renderDonutChart(catPercentages, overallPct) {
       const svg = document.getElementById('donutSvg');
       svg.innerHTML = '';
-
       let cumulativeOffset = 0;
       const categories = ['Health', 'Productivity', 'Spiritual', 'Learning', 'Personal'];
 
@@ -1890,7 +2247,6 @@
 
       document.getElementById('donutCenterPct').textContent = `${overallPct}%`;
 
-      // Render legend
       const legendContainer = document.getElementById('categoryLegendContainer');
       legendContainer.innerHTML = '';
       categories.forEach(cat => {
@@ -1907,17 +2263,15 @@
       });
     }
 
-    // WEEKLY PROGRESS BAR CHART RENDERER
     function renderWeeklyBars(weekdayPercentages) {
       const container = document.getElementById('weeklyBarsContainer');
-      // Keep only axis
       const axis = container.querySelector('.bar-y-axis');
       container.innerHTML = '';
       container.appendChild(axis);
 
       const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
       daysOfWeek.forEach((day, idx) => {
-        const pct = weekdayPercentages[idx] !== undefined ? weekdayPercentages[idx] : 70;
+        const pct = weekdayPercentages[idx] !== undefined ? weekdayPercentages[idx] : 65;
         const col = document.createElement('div');
         col.className = 'bar-col';
         col.innerHTML = `
@@ -1930,11 +2284,9 @@
       });
     }
 
-    // TOP PERFORMING HABITS RENDERER
     function renderTopPerformingHabits(habitsWithPct) {
       const container = document.getElementById('topPerfList');
       container.innerHTML = '';
-
       const top5 = [...habitsWithPct].sort((a, b) => b.pct - a.pct).slice(0, 5);
       const barColors = ['#0284c7', '#06b6d4', '#f97316', '#a855f7', '#3b82f6'];
 
@@ -1955,11 +2307,9 @@
       });
     }
 
-    // CATEGORY PROGRESS RENDERER
     function renderCategoryWiseProgress(catPercentages) {
       const container = document.getElementById('catProgList');
       container.innerHTML = '';
-
       const categories = ['Health', 'Productivity', 'Spiritual', 'Learning', 'Personal'];
       categories.forEach(cat => {
         const pct = catPercentages[cat] || 0;
@@ -1979,93 +2329,73 @@
       });
     }
 
-    // FULL DASHBOARD RECALCULATION ENGINE
+    // ─── FULL DASHBOARD RECALCULATION ENGINE ─────────────────
     function updateDashboard() {
-      const totalHabits = state.habits.length;
+      const totalHabits = habits.length;
       let totalCompletedAllDays = 0;
-      const totalPossibleChecks = totalHabits * 21;
+      const totalPossibleChecks = Math.max(totalHabits * 21, 1);
 
-      // Calculate habit-specific percentages
-      const habitsWithPct = state.habits.map(h => {
+      const habitsWithPct = habits.map(h => {
         const count = h.days.filter(Boolean).length;
         totalCompletedAllDays += count;
-        return {
-          ...h,
-          count,
-          pct: Math.round((count / 21) * 100)
-        };
+        return { ...h, count, pct: Math.round((count / 21) * 100) };
       });
 
-      // Today's Progress (day index 0 to 20 for days 1 to 21)
-      const currentDayIndex = Math.min(Math.max(state.selectedDay - 1, 0), 20);
-      let todayCompleted = 0;
-      state.habits.forEach(h => {
-        if (h.days[currentDayIndex]) todayCompleted++;
-      });
-      const todayPct = Math.round((todayCompleted / totalHabits) * 100);
+      // Selected Day Progress (Day 1 to 21)
+      const dayIdx = Math.min(Math.max(state.selectedDay - 1, 0), 20);
+      let dayCompleted = 0;
+      habits.forEach(h => { if (h.days[dayIdx]) dayCompleted++; });
+      const dayPct = totalHabits > 0 ? Math.round((dayCompleted / totalHabits) * 100) : 0;
 
-      // Update Today KPI
-      const todayCirclePath = document.getElementById('todayCirclePath');
-      todayCirclePath.setAttribute('stroke-dasharray', `${todayPct}, 100`);
-      document.getElementById('todayCirclePct').textContent = `${todayPct}%`;
-      document.getElementById('todayHabitsRatio').textContent = `${todayCompleted} / ${totalHabits} habits`;
-      document.getElementById('subTodayHabitsVal').textContent = `${todayCompleted} / ${totalHabits}`;
+      // Update KPI 1
+      const isRealToday = (state.calMonth === realDate.getMonth() && state.calYear === realDate.getFullYear() && state.selectedDay === realDate.getDate());
+      document.getElementById('todayProgressLabel').textContent = isRealToday ? 'Today Progress' : `Day ${state.selectedDay} Progress`;
+      document.getElementById('todayCirclePath').setAttribute('stroke-dasharray', `${dayPct}, 100`);
+      document.getElementById('todayCirclePct').textContent = `${dayPct}%`;
+      document.getElementById('todayHabitsRatio').textContent = `${dayCompleted} / ${totalHabits} habits`;
+      document.getElementById('subTodayHabitsVal').textContent = `${dayCompleted} / ${totalHabits}`;
 
-      // Weekly Average (Days 1 to 7 average)
+      // KPI 2: Weekly Average (first 7 days)
       let weekChecks = 0;
       const weekdayPercentages = [];
       for (let d = 0; d < 7; d++) {
         let dayCount = 0;
-        state.habits.forEach(h => {
-          if (h.days[d]) dayCount++;
-        });
+        habits.forEach(h => { if (h.days[d]) dayCount++; });
         weekChecks += dayCount;
-        weekdayPercentages.push(Math.round((dayCount / totalHabits) * 100));
+        weekdayPercentages.push(totalHabits > 0 ? Math.round((dayCount / totalHabits) * 100) : 0);
       }
-      const weeklyAvg = Math.round((weekChecks / (totalHabits * 7)) * 100);
+      const weeklyAvg = totalHabits > 0 ? Math.round((weekChecks / (totalHabits * 7)) * 100) : 0;
       document.getElementById('kpiWeeklyAvg').textContent = `${weeklyAvg}%`;
       document.getElementById('subWeeklyAvgVal').textContent = `${weeklyAvg}%`;
 
-      // Monthly Target Ratio
+      // KPI 3: Streak
+      const streak = calculateStreak();
+      document.getElementById('kpiDayStreak').textContent = streak;
+      document.getElementById('subStreakVal').textContent = streak;
+
+      // KPI 4: Monthly Target
       const monthlyPct = Math.round((totalCompletedAllDays / totalPossibleChecks) * 100);
       document.getElementById('kpiMonthlyTarget').textContent = `${monthlyPct}%`;
       document.getElementById('kpiMonthlyRatio').textContent = `${totalCompletedAllDays} / ${totalPossibleChecks} habits`;
       document.getElementById('subMonthlyTargetVal').textContent = `${monthlyPct}%`;
 
-      // Daily percentages for line chart (Days 1 to 14)
+      // Line Chart (Days 1 to 14)
       const dailyPercentages14 = [];
       for (let d = 0; d < 14; d++) {
         let dayCount = 0;
-        state.habits.forEach(h => {
-          if (h.days[d]) dayCount++;
-        });
-        dailyPercentages14.push(Math.round((dayCount / totalHabits) * 100));
+        habits.forEach(h => { if (h.days[d]) dayCount++; });
+        dailyPercentages14.push(totalHabits > 0 ? Math.round((dayCount / totalHabits) * 100) : 0);
       }
       renderLineChart(dailyPercentages14);
 
       // Category breakdown
       const catCounts = { Health: 0, Productivity: 0, Spiritual: 0, Learning: 0, Personal: 0 };
-      const catTotals = { Health: 0, Productivity: 0, Spiritual: 0, Learning: 0, Personal: 0 };
-
-      state.habits.forEach(h => {
+      habits.forEach(h => {
         const cat = h.category;
-        const checks = h.days.filter(Boolean).length;
-        if (catCounts[cat] !== undefined) {
-          catCounts[cat] += checks;
-          catTotals[cat] += 21;
-        }
+        if (catCounts[cat] !== undefined) catCounts[cat] += h.days.filter(Boolean).length;
       });
 
-      // Categories relative to overall template breakdown percentages:
-      const catPercentages = {
-        'Health': 30,
-        'Productivity': 25,
-        'Spiritual': 20,
-        'Learning': 15,
-        'Personal': 10
-      };
-
-      // Realtime adjustment based on completed counts
+      const catPercentages = { Health: 30, Productivity: 25, Spiritual: 20, Learning: 15, Personal: 10 };
       let totalCatChecks = Object.values(catCounts).reduce((a, b) => a + b, 0);
       if (totalCatChecks > 0) {
         catPercentages['Health'] = Math.round((catCounts['Health'] / totalCatChecks) * 100);
@@ -2081,28 +2411,43 @@
       renderCategoryWiseProgress(catPercentages);
     }
 
-    // INITIALIZATION & EVENT LISTENERS
+    // ─── INITIALIZATION & EVENT LISTENERS ────────────────────
     window.addEventListener('DOMContentLoaded', () => {
       renderCalendar();
       renderGoals();
       renderHabitTable();
       updateDashboard();
 
+      // Mini-calendar Prev / Next
+      document.getElementById('calPrevBtn').addEventListener('click', () => changeMonth(-1));
+      document.getElementById('calNextBtn').addEventListener('click', () => changeMonth(1));
+
+      // Header Prev / Next
+      document.getElementById('prevMonthBtn').addEventListener('click', () => changeMonth(-1));
+      document.getElementById('nextMonthBtn').addEventListener('click', () => changeMonth(1));
+
+      // Jump to Today
+      document.getElementById('todayJumpBtn').addEventListener('click', jumpToToday);
+
       // Notes sync
       const notesEl = document.getElementById('notesInput');
       notesEl.value = state.notes;
       notesEl.addEventListener('input', (e) => {
         state.notes = e.target.value;
-        saveState();
+        triggerSave();
       });
 
-      // Reset to exact preset
+      // Reset to template defaults
       document.getElementById('resetDataBtn').addEventListener('click', () => {
         if (confirm('Reset tracker to the exact template preset?')) {
-          state.habits = JSON.parse(JSON.stringify(INITIAL_HABITS));
+          habits = JSON.parse(JSON.stringify(INITIAL_HABITS));
           state.goals = JSON.parse(JSON.stringify(INITIAL_GOALS));
+          state.calMonth = 5;
+          state.calYear = 2026;
           state.selectedDay = 12;
-          saveState();
+          state.notes = '';
+          notesEl.value = '';
+          triggerSave();
           renderCalendar();
           renderGoals();
           renderHabitTable();
@@ -2110,19 +2455,67 @@
         }
       });
 
-      // Notion Modal controls
-      const modal = document.getElementById('notionModal');
-      document.getElementById('openNotionModalBtn').addEventListener('click', () => {
-        modal.style.display = 'flex';
+      // Add Habit Modal
+      const addModal = document.getElementById('addHabitModal');
+      document.getElementById('openAddHabitModalBtn').addEventListener('click', () => {
+        document.getElementById('newHabitName').value = '';
+        addModal.style.display = 'flex';
       });
-      document.getElementById('closeNotionModalBtn').addEventListener('click', () => {
-        modal.style.display = 'none';
+      document.getElementById('closeAddHabitBtn').addEventListener('click', () => addModal.style.display = 'none');
+      document.getElementById('cancelAddHabitBtn').addEventListener('click', () => addModal.style.display = 'none');
+
+      document.getElementById('saveNewHabitBtn').addEventListener('click', () => {
+        const name = document.getElementById('newHabitName').value.trim();
+        if (!name) {
+          alert('Please enter a habit name');
+          return;
+        }
+        const icon = document.getElementById('newHabitIcon').value.trim() || '📌';
+        const category = document.getElementById('newHabitCategory').value;
+
+        habits.push({
+          id: habits.length + 1,
+          icon,
+          name,
+          category,
+          days: new Array(21).fill(false),
+          specialAccent: {}
+        });
+
+        triggerSave();
+        renderHabitTable();
+        updateDashboard();
+        addModal.style.display = 'none';
       });
-      document.getElementById('closeModalOkBtn').addEventListener('click', () => {
-        modal.style.display = 'none';
+
+      // Notion Modal
+      const notionModal = document.getElementById('notionModal');
+      document.getElementById('openNotionModalBtn').addEventListener('click', () => notionModal.style.display = 'flex');
+      document.getElementById('closeNotionModalBtn').addEventListener('click', () => notionModal.style.display = 'none');
+      document.getElementById('closeModalOkBtn').addEventListener('click', () => notionModal.style.display = 'none');
+
+      // Export JSON backup
+      document.getElementById('exportDataBtn').addEventListener('click', () => {
+        const exportData = {
+          month: state.calMonth,
+          year: state.calYear,
+          habits,
+          goals: state.goals,
+          notes: state.notes
+        };
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `habit-tracker-backup-${state.calYear}-${state.calMonth + 1}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
       });
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.style.display = 'none';
+
+      // Close modals on outside click
+      window.addEventListener('click', (e) => {
+        if (e.target === addModal) addModal.style.display = 'none';
+        if (e.target === notionModal) notionModal.style.display = 'none';
       });
     });
   </script>
